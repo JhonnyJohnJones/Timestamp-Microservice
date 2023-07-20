@@ -41,8 +41,9 @@ app.get("/api", (req, res) => {
 
 app.get("/api/:date?", (req, res) => {
   date = req.params.date
+  console.log(date)
   console.log(req.query.login)
-  if (!(date.match(/\-+/))) {
+  if (!(date.match(/\-+/)) && !(date.match(/GMT$/))) {
     date = parseInt(date, 10)
     console.log("é unix")
   } else {
@@ -52,22 +53,10 @@ app.get("/api/:date?", (req, res) => {
   utc = new Date(date).toUTCString()
   if (utc === "Invalid Date") {
     console.log("não era... ;-;")
+    console.log(date)
     res.json({error: "Invalid Date"})
   } else {
     console.log(utc + " - " + typeof(date))
     res.json({unix, utc})
   }
 })
-
-
-
-
-
-
-
-
-
-
-
-
-
